@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">ChoCoTv</string>
+
+    <!--Network Error Msg-->
+    <string name="service_error">伺服器錯誤</string>
+    <string name="service_not_found">請求的服務資源不存在</string>
+    <string name="service_timeout">請求超時</string>
+    <string name="unexpected_error">未知錯誤</string>
+    <string name="network_wrong">網路連線失敗</string>
+
+    <string name="imageContentDesc">drama thumb</string>
+    <string name="imageDetailDesc">drama detail thumb</string>
+    <string name="drama_date_and_views">%s 出版 | %s 次觀看</string>
+    <string name="search_hint">搜尋</string>
+    <string name="network_enable">網路正常</string>
+    <string name="network_disable">網路死掉啦～～～</string>
+</resources>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:layout_marginBottom="@dimen/spacing_small"
+        android:padding="@dimen/drama_item_views_spacing">
+
+    <ImageView
+            android:id="@+id/imageView_item"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:contentDescription="@string/imageContentDesc"
+            android:transitionName="activity_transition"
+            app:layout_constraintDimensionRatio="W,4:3"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/demo"/>
+
+    <TextView
+            android:id="@+id/textView_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/drama_item_views_spacing"
+            android:layout_marginStart="@dimen/drama_item_views_spacing"
+            android:layout_marginEnd="@dimen/drama_item_views_spacing"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/AppText.Title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/imageView_item"
+            app:layout_constraintTop_toBottomOf="@id/imageView_item"
+            tools:text="a long draaamaa naaaaaaaaaaaaaaaaaaaaaaaaaaaaaame"/>
+
+    <TextView
+            android:id="@+id/textView_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/drama_item_views_spacing"
+            android:drawableStart="@drawable/ic_star_small"
+            android:textAppearance="@style/AppText"
+            app:layout_constraintStart_toStartOf="@id/textView_title"
+            app:layout_constraintTop_toBottomOf="@id/textView_title"
+            tools:text="4.6"/>
+
+    <TextView
+            android:id="@+id/textView_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/drama_item_views_spacing"
+            android:drawableStart="@drawable/ic_date_created"
+            android:textAppearance="@style/AppText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textView_rating"
+            tools:text="2019.01.04"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
