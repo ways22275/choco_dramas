@@ -9,9 +9,11 @@ import android.os.Build
 
 class ConnectReceiver : BroadcastReceiver() {
 
+    var receiverListener: ConnectivityReceiverListener? = null
+
     override fun onReceive(context: Context?, intent: Intent?) {
-        if (connectivityReceiverListener != null) {
-            connectivityReceiverListener!!.onNetworkConnectionChanged(isConnectedOrConnecting(context!!))
+        if (receiverListener != null) {
+            receiverListener!!.onNetworkConnectionChanged(isConnectedOrConnecting(context!!))
         }
     }
 
@@ -45,9 +47,5 @@ class ConnectReceiver : BroadcastReceiver() {
 
     interface ConnectivityReceiverListener {
         fun onNetworkConnectionChanged(isConnected: Boolean)
-    }
-
-    companion object {
-        var connectivityReceiverListener: ConnectivityReceiverListener? = null
     }
 }

@@ -82,6 +82,7 @@ class ListAdapter(private val listener: ListAdapterListener) :
         notifyDataSetChanged()
     }
 
+    @Deprecated("only temp use")
     fun getDataByID (id : String): DramaItem? {
         for (item in list) {
             Log.d("AppLink", item.dramaId.toString())

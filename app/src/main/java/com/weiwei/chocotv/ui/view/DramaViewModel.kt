@@ -14,6 +14,7 @@ class DramaViewModel : ViewModel() {
 
     private var repository: DramaRepository? = providerRepository()
     private var list : MutableLiveData<List<DramaItem>> = MutableLiveData()
+    private var item : MutableLiveData<DramaItem> = MutableLiveData()
     private val compositeDisposable = CompositeDisposable()
 
     fun fetchList() {
@@ -31,6 +32,21 @@ class DramaViewModel : ViewModel() {
         compositeDisposable.add(disposable)
     }
 
+    fun getItemByID(id : String) {
+        val disposable = repository!!.getItemFromLocal(id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe (
+                { dramaItem ->
+                    item.value = dramaItem
+                },
+                { e ->
+
+                }
+            )
+        compositeDisposable.add(disposable)
+    }
+
     fun getKeyWord() : String? {
         return repository?.getKeyWordFromSP()
     }
@@ -40,6 +56,8 @@ class DramaViewModel : ViewModel() {
     }
 
     fun getListLiveData() = list
+
+    fun getItemLiveData() = item
 
     override fun onCleared() {
         super.onCleared()

@@ -5,7 +5,6 @@ import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.SearchView
@@ -38,13 +37,15 @@ class MainActivity : BaseActivity() , SwipeRefreshLayout.OnRefreshListener,
     private lateinit var viewModel: DramaViewModel
     private lateinit var adapter : ListAdapter
 
+    private var connectReceiver = ConnectReceiver();
+
     override fun getContentViewLayoutID(): Int {
         return R.layout.activity_main
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun initView(savedInstanceState: Bundle?) {
-        registerReceiver(ConnectReceiver(),
+        registerReceiver(connectReceiver,
             IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
         viewModel = ViewModelProviders.of(this).get(DramaViewModel::class.java)
@@ -68,12 +69,12 @@ class MainActivity : BaseActivity() , SwipeRefreshLayout.OnRefreshListener,
 
     override fun onStart() {
         super.onStart()
-        ConnectReceiver.connectivityReceiverListener = this
+        connectReceiver.receiverListener = this
     }
 
     override fun onStop() {
         super.onStop()
-        ConnectReceiver.connectivityReceiverListener = null
+        connectReceiver.receiverListener = null
     }
 
     override fun getEnterTransAnimType() : Int {
@@ -125,7 +126,6 @@ class MainActivity : BaseActivity() , SwipeRefreshLayout.OnRefreshListener,
 
     private fun initViewData() {
         viewModel.getListLiveData().observe(this, Observer {
-            swipeRefreshLayout.isRefreshing = false
             runAnimation()
             adapter.setData(it)
             val keyword = viewModel.getKeyWord()
@@ -133,17 +133,16 @@ class MainActivity : BaseActivity() , SwipeRefreshLayout.OnRefreshListener,
                 searchView.setQuery(keyword, true)
             }
             searchView.clearFocus()
-
-
-            val dramaID = intent.getStringExtra(Bundle_Link_Key)
-            if (!dramaID.isNullOrEmpty()) {
-                val item = adapter.getDataByID(dramaID)
-                if (item != null)
-                    gotoDetailPage(item)
-            }
-
+        })
+        viewModel.getItemLiveData().observe(this, Observer {
+            gotoDetailPage(it)
         })
         viewModel.fetchList()
+
+        val dramaID = intent.getStringExtra(Bundle_Link_Key)
+        if (!dramaID.isNullOrEmpty()) {
+            viewModel.getItemByID(dramaID)
+        }
     }
 
     private fun runAnimation() {

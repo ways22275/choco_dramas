@@ -6,10 +6,7 @@ import com.weiwei.chocotv.util.sharePreference.SharePreferenceManager.getKeyWord
 import com.weiwei.chocotv.util.sharePreference.SharePreferenceManager.putKeyWord
 import io.reactivex.Single
 
-class DramaRepository(_dramaModel: DramaDao, _dramaService: DramaService) {
-
-    private val dramaModel : DramaDao = _dramaModel
-    private val dramaService : DramaService = _dramaService
+class DramaRepository(private var dramaModel : DramaDao, private var dramaService: DramaService) {
 
     fun fetchList(): Single<List<DramaItem>?> {
         return dramaService.getDramaList()
@@ -23,6 +20,10 @@ class DramaRepository(_dramaModel: DramaDao, _dramaService: DramaService) {
     }
 
     private fun getListFromLocal() = dramaModel.getList()
+
+    fun getItemFromLocal(id : String) : Single<DramaItem>{
+        return dramaModel.getItemByID(id)
+    }
 
     private fun setList(dramas: List<DramaItem>?) = dramas?.let { dramaModel.insertAll(it) }
 

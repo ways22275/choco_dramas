@@ -14,6 +14,11 @@ abstract class DramaDao : BaseDao<DramaItem> {
     @Query("SELECT * FROM $Table_Drama")
     abstract fun getList(): Single<List<DramaItem>>
 
+    @Query("SELECT * FROM $Table_Drama WHERE "
+            + "  dramaId = :id"
+    )
+    abstract fun getItemByID(id :String): Single<DramaItem>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insertAll(items: List<DramaItem>)
 }
